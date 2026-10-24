@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>موسوعة النباتات العمانية</title>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<style>
+:root{--bg:#14110c;--gold:#c9a24b;--green:#86a08a;--ink:#1f3a2e;--cream:#fbf5e6}
+html,body{height:100%;margin:0;background:var(--bg);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stage{position:relative;width:min(100vw,calc(100vh*16/9));aspect-ratio:16/9}
+.scr{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .6s ease,visibility .6s}
+.scr.on{opacity:1;visibility:visible}
+.scr img{width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.hot{position:absolute;background:transparent;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hot:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.go{border-radius:999px;box-shadow:0 0 0 0 rgba(255,248,225,.7);animation:ring 2.4s infinite}
+.go:hover{background:rgba(255,248,225,.18)}
+@keyframes ring{70%{box-shadow:0 0 0 16px rgba(255,248,225,0)}100%{box-shadow:0 0 0 0 rgba(255,248,225,0)}}
+.arch{border-radius:50% 50% 8px 8px/22% 22% 8px 8px;transition:background .25s,box-shadow .25s}
+.arch:hover,.arch:focus-visible{background:rgba(255,236,170,.22);box-shadow:inset 0 0 0 3px rgba(255,226,140,.9),0 0 28px rgba(255,214,110,.6)}
+.mb{border-radius:50%;transition:background .2s,box-shadow .2s}
+.mb:hover{background:rgba(255,236,170,.2)}
+.mb.cur{box-shadow:0 0 0 3px rgba(255,226,140,.95),0 0 18px rgba(255,214,110,.7)}
+.play{display:block;border-radius:50%;transition:transform .2s}.play:hover{transform:scale(1.08)}
+.play svg{width:100%;height:100%;display:block}
+.back{position:absolute;top:2.2%;right:1.8%;z-index:3;display:none;align-items:center;gap:.5em;font-size:clamp(12px,1.5vw,20px);color:var(--cream);background:rgba(31,58,46,.82);border:1px solid rgba(255,235,180,.5);border-radius:999px;padding:.5em 1.1em;cursor:pointer;backdrop-filter:blur(4px);font-family:inherit}
+.back.on{display:flex}
+.back:hover{background:rgba(31,58,46,.95)}
+.modal{position:absolute;inset:0;z-index:5;display:none;align-items:center;justify-content:center;background:rgba(20,17,12,.55)}
+.modal.on{display:flex}
+.card{background:var(--cream);color:var(--ink);border:2px solid var(--gold);border-radius:18px;padding:3% 4%;text-align:center;max-width:70%;box-shadow:0 20px 60px rgba(0,0,0,.45);animation:pop .3s ease}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.card h2{margin:0 0 .15em;font-size:clamp(20px,3.2vw,46px)}
+.card .en{font-size:clamp(14px,1.9vw,26px);font-style:italic;margin-bottom:.9em}
+.card p{margin:0 0 1.1em;font-size:clamp(12px,1.5vw,20px);opacity:.8}
+.card #mchoices{display:flex;gap:12px;justify-content:center;margin-bottom:1em}.card .mcx{background:transparent;color:var(--ink);border:1px solid rgba(31,58,46,.4)}.card button{font:inherit;font-size:clamp(12px,1.5vw,20px);background:var(--green);color:#fff;border:0;border-radius:999px;padding:.5em 1.6em;cursor:pointer}
+.t3{display:none}.t3.on{display:block}
+.haze{position:absolute;pointer-events:none;backdrop-filter:blur(16px) brightness(1.06) saturate(.85);-webkit-backdrop-filter:blur(16px) brightness(1.06) saturate(.85);-webkit-mask-image:radial-gradient(ellipse at 50% 50%,#000 52%,transparent 71%);mask-image:radial-gradient(ellipse at 50% 50%,#000 52%,transparent 71%)}
+#mv{position:absolute;background:transparent;--poster-color:transparent;cursor:grab;outline:none}#mv:active{cursor:grabbing}
+.hint{position:absolute;display:flex;align-items:center;justify-content:center;color:#fff8e4;font-size:clamp(10px,1.45vw,20px);background:rgba(31,58,46,.78);border:1px solid rgba(255,235,180,.45);border-radius:999px;pointer-events:none;transition:opacity .8s;white-space:nowrap}
+.hint.off{opacity:0}
+.toast{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);z-index:6;background:rgba(31,58,46,.92);color:#fff8e4;border:1px solid rgba(255,235,180,.5);border-radius:999px;padding:.5em 1.4em;font-size:clamp(12px,1.6vw,22px);opacity:0;pointer-events:none;transition:opacity .3s}
+.toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){.go{animation:none}.scr{transition:none}}
+</style></head><body>
+<div class="stage">
+  <section class="scr on" id="s1"><img src="img/entrance.jpg" alt="موسوعة النباتات العمانية">
+    <button class="hot go" id="start" style="left:62.396%;top:90.278%;width:17.292%;height:7.130%" aria-label="ابدأ رحلة الاستكشاف"></button></section>
+  <section class="scr" id="s2"><img src="img/families.jpg" alt="الفصائل النباتية"><button class="hot arch" style="left:1.562%;top:18.056%;width:13.281%;height:44.907%" data-ar="الفصيلة القديسية" data-en="Nitrariaceae" data-plants="" aria-label="الفصيلة القديسية Nitrariaceae"></button><button class="hot arch" style="left:15.885%;top:23.148%;width:12.760%;height:39.352%" data-ar="الفصيلة الأثلية" data-en="Tamaricaceae" data-plants="" aria-label="الفصيلة الأثلية Tamaricaceae"></button><button class="hot arch" style="left:29.688%;top:25.463%;width:12.500%;height:37.037%" data-ar="الفصيلة الكبارية" data-en="Capparaceae" data-plants="" aria-label="الفصيلة الكبارية Capparaceae"></button><button class="hot arch" style="left:43.490%;top:25.926%;width:12.760%;height:36.574%" data-ar="الفصيلة القطيفية" data-en="Amaranthaceae" data-plants="" aria-label="الفصيلة القطيفية Amaranthaceae"></button><button class="hot arch" style="left:57.708%;top:25.463%;width:12.344%;height:37.037%" data-ar="الفصيلة البانية" data-en="Moringaceae" data-plants="" aria-label="الفصيلة البانية Moringaceae"></button><button class="hot arch" style="left:71.094%;top:23.148%;width:13.021%;height:39.352%" data-ar="الفصيلة البقولية" data-en="Fabaceae" data-plants="ashraq,salam,ghaf" aria-label="الفصيلة البقولية Fabaceae"></button><button class="hot arch" style="left:85.000%;top:18.056%;width:13.698%;height:44.907%" data-ar="الفصيلة النبقية" data-en="Rhamnaceae" data-plants="sidr" aria-label="الفصيلة النبقية Rhamnaceae"></button></section>
+  <section class="scr" id="sidr_intro"><img data-src="img/sidr_intro.jpg" alt=""></section><section class="scr" id="sidr_harvest"><img data-src="img/sidr_harvest.jpg" alt=""></section><section class="scr" id="sidr_uses"><img data-src="img/sidr_uses.jpg" alt=""></section><section class="scr" id="sidr_culture"><img data-src="img/sidr_culture.jpg" alt=""></section><section class="scr" id="sidr_habitat"><img data-src="img/sidr_habitat.jpg" alt=""></section><section class="scr" id="sidr_watch"><img data-src="img/sidr_watch.jpg" alt=""><a class="hot play" id="play_sidr" href="#" target="_blank" rel="noopener" style="left:74.740%;top:37.037%;width:10.417%;height:18.519%" aria-label="شاهد الفيديو"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="rgba(20,40,30,.55)" stroke="#e6c46a" stroke-width="3"/><path d="M40 30 L72 50 L40 70Z" fill="#f5dc94"/></svg></a></section><section class="scr" id="ashraq_intro"><img data-src="img/ashraq_intro.jpg" alt=""></section><section class="scr" id="ashraq_harvest"><img data-src="img/ashraq_harvest.jpg" alt=""></section><section class="scr" id="ashraq_uses"><img data-src="img/ashraq_uses.jpg" alt=""></section><section class="scr" id="ashraq_culture"><img data-src="img/ashraq_culture.jpg" alt=""></section><section class="scr" id="ashraq_habitat"><img data-src="img/ashraq_habitat.jpg" alt=""></section><section class="scr" id="ashraq_watch"><img data-src="img/ashraq_watch.jpg" alt=""><a class="hot play" id="play_ashraq" href="#" target="_blank" rel="noopener" style="left:74.740%;top:37.037%;width:10.417%;height:18.519%" aria-label="شاهد الفيديو"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="rgba(20,40,30,.55)" stroke="#e6c46a" stroke-width="3"/><path d="M40 30 L72 50 L40 70Z" fill="#f5dc94"/></svg></a></section><section class="scr" id="ghaf_intro"><img data-src="img/ghaf_intro.jpg" alt=""></section><section class="scr" id="ghaf_harvest"><img data-src="img/ghaf_harvest.jpg" alt=""></section><section class="scr" id="ghaf_uses"><img data-src="img/ghaf_uses.jpg" alt=""></section><section class="scr" id="ghaf_culture"><img data-src="img/ghaf_culture.jpg" alt=""></section><section class="scr" id="ghaf_habitat"><img data-src="img/ghaf_habitat.jpg" alt=""></section><section class="scr" id="ghaf_watch"><img data-src="img/ghaf_watch.jpg" alt=""><a class="hot play" id="play_ghaf" href="#" target="_blank" rel="noopener" style="left:74.740%;top:37.037%;width:10.417%;height:18.519%" aria-label="شاهد الفيديو"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="rgba(20,40,30,.55)" stroke="#e6c46a" stroke-width="3"/><path d="M40 30 L72 50 L40 70Z" fill="#f5dc94"/></svg></a></section><section class="scr" id="salam_intro"><img data-src="img/salam_intro.jpg" alt=""></section><section class="scr" id="salam_harvest"><img data-src="img/salam_harvest.jpg" alt=""></section><section class="scr" id="salam_uses"><img data-src="img/salam_uses.jpg" alt=""></section><section class="scr" id="salam_culture"><img data-src="img/salam_culture.jpg" alt=""></section><section class="scr" id="salam_habitat"><img data-src="img/salam_habitat.jpg" alt=""></section><section class="scr" id="salam_watch"><img data-src="img/salam_watch.jpg" alt=""><a class="hot play" id="play_salam" href="#" target="_blank" rel="noopener" style="left:74.740%;top:37.037%;width:10.417%;height:18.519%" aria-label="شاهد الفيديو"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="rgba(20,40,30,.55)" stroke="#e6c46a" stroke-width="3"/><path d="M40 30 L72 50 L40 70Z" fill="#f5dc94"/></svg></a></section>
+  <div class="t3" id="t3"><div class="haze" id="haze"></div><model-viewer id="mv" camera-controls auto-rotate auto-rotate-delay="2500" rotation-per-second="14deg" touch-action="none" disable-pan shadow-intensity="0" exposure="1.15" camera-orbit="20deg 82deg auto" min-camera-orbit="auto 45deg 70%" max-camera-orbit="auto 105deg 160%" field-of-view="28deg" interaction-prompt="none" alt="نموذج ثلاثي الأبعاد"></model-viewer><div class="hint" id="hint"></div></div>
+  <div id="menu" style="display:none"><button class="hot mb" data-page="intro" aria-label="تعرف عليه"></button><button class="hot mb" data-page="harvest" aria-label="الاستخراج"></button><button class="hot mb" data-page="uses" aria-label="الاستخدامات"></button><button class="hot mb" data-page="culture" aria-label="الثقافة"></button><button class="hot mb" data-page="habitat" aria-label="الموطن"></button><button class="hot mb" data-page="watch" aria-label="شاهد"></button></div>
+  <button class="back" id="back">رجوع ›</button>
+  <div class="toast" id="toast">الفيديو قريباً</div>
+  <div class="modal" id="m"><div class="card"><h2 id="mt"></h2><div class="en" id="me"></div><p id="mmsg"></p><div id="mchoices"></div><button id="mc" class="mcx">إغلاق</button></div></div>
+</div>
+<script>
+var PLANTS={"sidr": {"name": "السدر", "sci": "Ziziphus spina-christi", "menu": {"intro": [727, 1025, 73.4], "harvest": [733, 1025, 73.0], "uses": [728, 1025, 73.4], "culture": [727, 1025, 73.4], "habitat": [727, 1025, 73.4], "watch": [718, 1025, 73.4]}, "viewer": [380, 130, 860, 720], "haze": [300, 110, 1020, 720], "hint": [660, 790, 300, 46], "model": "models/sidr.glb", "video": "https://www.youtube.com/watch?v=LYJbYGE7wh4"}, "ashraq": {"name": "العشرق", "sci": "Senna italica", "menu": {"intro": [653, 998, 73.2], "harvest": [655, 998, 73.2], "uses": [656, 998, 73.2], "culture": [653, 998, 73.4], "habitat": [654, 998, 73.6], "watch": [652, 1002, 73.2]}, "viewer": [330, 120, 970, 740], "haze": [260, 100, 1070, 780], "hint": [660, 800, 300, 46], "model": "models/ashraq.glb", "video": ""}, "ghaf": {"name": "الغاف", "sci": "Prosopis cineraria", "menu": {"intro": [688, 1023, 73.6], "harvest": [693, 1030, 73.2], "uses": [685, 1022, 73.4], "culture": [688, 1022, 73.4], "habitat": [692, 1014, 73.4], "watch": [685, 1014, 73.2]}, "viewer": [330, 120, 1000, 740], "haze": [250, 90, 1160, 800], "hint": [660, 810, 300, 46], "model": "models/ghaf.glb", "video": ""}, "salam": {"name": "السلم", "sci": "Vachellia flava", "menu": {"intro": [654, 1014, 73.4], "harvest": [693, 1012, 73.2], "uses": [684, 1012, 73.4], "culture": [654, 1012, 73.4], "habitat": [692, 989, 73.2], "watch": [685, 992, 73.2]}, "viewer": [340, 120, 960, 740], "haze": [250, 90, 1120, 800], "hint": [660, 810, 300, 46], "model": "models/salam.glb", "video": ""}};
+var PAGES=["intro", "harvest", "uses", "culture", "habitat", "watch"];
+var $=function(i){return document.getElementById(i)};
+function pct(x,y,w,h){return 'left:'+(x/1920*100).toFixed(3)+'%;top:'+(y/1080*100).toFixed(3)+'%;width:'+(w/1920*100).toFixed(3)+'%;height:'+(h/1080*100).toFixed(3)+'%'}
+var cur='s1',plant=null,pageNow='intro',blobs={},loadedImgs={};
+var mv=$('mv'),hint=$('hint');
+function allScreens(){return ['s1','s2'].concat(Object.keys(PLANTS).reduce(function(a,p){return a.concat(PAGES.map(function(g){return p+'_'+g}))},[]))}
+function loadImgs(p){if(loadedImgs[p])return;loadedImgs[p]=1;PAGES.forEach(function(g){var i=document.querySelector('#'+p+'_'+g+' img');if(i&&!i.getAttribute('src'))i.setAttribute('src',i.dataset.src)})}
+function layout(p){var c=PLANTS[p];if(!c.model)return;
+ mv.style.cssText=pct.apply(null,c.viewer);$('haze').style.cssText=pct.apply(null,c.haze);$('hint').style.cssText=pct.apply(null,c.hint)}
+function placeMenu(p,pg){var m=PLANTS[p].menu[pg];
+ document.querySelectorAll('.mb').forEach(function(b,i){b.style.cssText=pct(m[0]+i*m[2]-37,m[1]-38,74,76)})}
+function loadModel(p){
+ if(mv.dataset.plant===p&&mv.getAttribute('src'))return;
+ mv.dataset.plant=p;hint.classList.remove('off');hint.textContent='جاري تحميل الشجرة…';
+ mv.setAttribute('src',PLANTS[p].model)}
+function show(id){cur=id;
+ allScreens().forEach(function(s){var e=$(s);if(e)e.classList.toggle('on',s===id)});
+ var isP=id.indexOf('_')>0;
+ if(isP){var p=id.split('_')[0],pg=id.split('_')[1];
+  if(p!==plant){plant=p;layout(p);loadImgs(p);if(PLANTS[p].model)loadModel(p)}
+  pageNow=pg;placeMenu(p,pg)}
+ $('t3').classList.toggle('on',isP&&!!PLANTS[plant].model);$('menu').style.display=isP?'block':'none';
+ document.querySelectorAll('.mb').forEach(function(b){b.classList.toggle('cur',isP&&b.dataset.page===pageNow)});
+ $('back').classList.toggle('on',id!=='s1')}
+mv.addEventListener('load',function(){hint.textContent='اسحب بإصبعك لتدوير الشجرة';hint.classList.remove('off');setTimeout(function(){hint.classList.add('off')},5000)});
+mv.addEventListener('progress',function(e){var t=e.detail.totalProgress;if(t<1&&hint.textContent.indexOf('جاري')===0)hint.textContent='جاري تحميل الشجرة… '+Math.round(t*100)+'%'});
+mv.addEventListener('error',function(){hint.classList.remove('off');hint.textContent='تعذّر تحميل الشجرة'});
+mv.addEventListener('camera-change',function(e){if(e.detail&&e.detail.source==='user-interaction')hint.classList.add('off')});
+$('start').onclick=function(){show('s2')};
+$('back').onclick=function(){if(cur.indexOf('_')>0){plant=null;show('s2')}else show('s1')};
+document.querySelectorAll('.mb').forEach(function(b){b.onclick=function(){show(plant+'_'+b.dataset.page)}});
+document.querySelectorAll('.arch').forEach(function(b){b.onclick=function(){
+ var ps=b.dataset.plants?b.dataset.plants.split(','):[];
+ if(ps.length===1){show(ps[0]+'_intro');return}
+ $('mt').textContent=b.dataset.ar;$('me').textContent=b.dataset.en;
+ var box=$('mchoices');box.innerHTML='';
+ if(ps.length){$('mmsg').textContent='اختر النبات';ps.forEach(function(p){var x=document.createElement('button');x.textContent=PLANTS[p].name;x.onclick=function(){$('m').classList.remove('on');show(p+'_intro')};box.appendChild(x)})}
+ else $('mmsg').textContent='صفحة هذه الفصيلة قيد الإعداد.';
+ $('m').classList.add('on')}});
+$('mc').onclick=function(){$('m').classList.remove('on')};
+$('m').onclick=function(e){if(e.target===$('m'))$('m').classList.remove('on')};
+function ytId(u){var r=(u||'').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);return r?r[1]:''}
+var tt;Object.keys(PLANTS).forEach(function(p){var a=$('play_'+p),id=ytId(PLANTS[p].video);
+ if(id){a.href='https://www.youtube.com/watch?v='+id}
+ else{a.onclick=function(e){e.preventDefault();var t=$('toast');t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on')},2200)}}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$('m').classList.remove('on')});
+</script></body></html>
